@@ -13,11 +13,10 @@ app.use(function(err, req, res, next) {
 	res.send({ error: 'Could not decode request: JSON parsing failed' })
 })
 
-app.post('/', function (req, res) {
-	var result = {}
-	result.response = homeFilter.filterByTypeAndWorkflow(req.body.payload, 'htv', 'completed')
 
-	res.send(result)
-})
+app.post('/:type/:workflow', homeFilter.filterByTypeAndWorkflow)
+
+//default endpoint
+app.post('/', homeFilter.filterByTypeAndWorkflow)
 
 var server = app.listen(port)

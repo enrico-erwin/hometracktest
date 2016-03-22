@@ -23,20 +23,18 @@ function concatAddress(address){
 	return addressStr;
 }
 
-/**
- * Service function to filter properties by type and workflow
- *
- * @param {Array} data represents array containing all properties details
- * @param {Object} type of property to be filtered
- * @param {Object} workflow status of property to be filtered
- * @return {Array} filtered properties in array is transformed to only contain address, type, and workflow
-*/
-exports.filterByTypeAndWorkflow = function(data, type, workflow) {
-	var result = []
+exports.filterByTypeAndWorkflow = function(req, res) {
+	console.log(req);
+	var data = req.body.payload
+	var type = req.params.type || 'htv'
+	var workflow = req.params.workflow || 'completed'
+	var result = {
+		response: []
+	}
 
 	data.forEach(function(item){
 		if(validPropertyObject(item) && item.workflow ===  workflow && item.type === type){
-			result.push({
+			result.response.push({
 				'concataddress': concatAddress(item.address),
 				'type': item.type,
 				'workflow': item.workflow
@@ -44,5 +42,5 @@ exports.filterByTypeAndWorkflow = function(data, type, workflow) {
 		}
 	})
 
-	return result;
+	res.send(result)
 }

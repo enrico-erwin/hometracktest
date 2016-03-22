@@ -21,26 +21,32 @@ Npm will download all server side dependency, this may take a couple of minutes.
 By default the application will run on port 8080, however when deployed to Heroku, it would run on port 80.
 
 ## Library Version
-
+```
 npm: 5.3.5
 node: 4.2.2
 express: 4.13.1
+```
 
 ## Usage
 
 Use a REST client tool such as Postman to access the api endpoint.
 
-On development environment the endpoint should be accessible from the url:
+On development environment the endpoints should be accessible from the url:
 ```
-POST localhost:8080/.
+POST localhost:8080/
 ```
 
-On heroku deployment, the endpoint should be accessible from the url:
+On heroku deployment, the endpoints should be accessible from the url:
 ```
 POST warm-temple-55667.herokuapp.com/
 ```
 
 Make sure the body of the POST request is of application/json format
+
+Another version of the api:
+```
+POST localhost:8080/[type]/[workflow]
+```
 
 
 
