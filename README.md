@@ -48,5 +48,14 @@ Another version of the api:
 POST localhost:8080/[type]/[workflow]
 ```
 
+## Unit Test
+
+To run the unit test run the following command on the root directory of this application
+```
+mocha
+```
+
+Note: this command should be run when the application is not running
+
 
 

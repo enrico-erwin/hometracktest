@@ -24,7 +24,6 @@ function concatAddress(address){
 }
 
 exports.filterByTypeAndWorkflow = function(req, res) {
-	console.log(req);
 	var data = req.body.payload
 	var type = req.params.type || 'htv'
 	var workflow = req.params.workflow || 'completed'
@@ -32,15 +31,22 @@ exports.filterByTypeAndWorkflow = function(req, res) {
 		response: []
 	}
 
-	data.forEach(function(item){
-		if(validPropertyObject(item) && item.workflow ===  workflow && item.type === type){
-			result.response.push({
-				'concataddress': concatAddress(item.address),
-				'type': item.type,
-				'workflow': item.workflow
-			})
-		}
-	})
+	if(data){
+		data.forEach(function(item){
+			if(validPropertyObject(item) && item.workflow ===  workflow && item.type === type){
+				result.response.push({
+					'concataddress': concatAddress(item.address),
+					'type': item.type,
+					'workflow': item.workflow
+				})
+			}
+		})
 
-	res.send(result)
+		res.send(result)
+	}
+	else{
+		res.status(400)
+		res.send({ error: 'Could not decode request: JSON parsing failed' })
+	}
+
 }

@@ -20,3 +20,4 @@ app.post('/:type/:workflow', homeFilter.filterByTypeAndWorkflow)
 app.post('/', homeFilter.filterByTypeAndWorkflow)
 
 var server = app.listen(port)
+module.exports = server
