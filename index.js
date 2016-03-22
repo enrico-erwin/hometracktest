@@ -1,21 +1,23 @@
-var express = require('express');
-var app = express();
+var port = process.env.PORT || 8080
 
-// This responds with "Hello World" on the homepage
-app.get('/', function (req, res) {
-   console.log("Got a GET request for the homepage");
-   res.send('Hello GET');
+var express = require('express')
+var bodyParser = require('body-parser')
+var homeFilter = require("./services/homefilter.js")
+
+var jsonParser = bodyParser.json()
+var app = express()
+
+app.use(jsonParser)
+app.use(function(err, req, res, next) {
+	res.status(400)
+	res.send({ error: 'Could not decode request: JSON parsing failed' })
 })
 
-
-// This responds a POST request for the homepage
 app.post('/', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   res.send('Hello POST');
+	var result = {}
+	result.response = homeFilter.filterByTypeAndWorkflow(req.body.payload, 'htv', 'completed')
+
+	res.send(result)
 })
 
-var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-})
+var server = app.listen(port)
